@@ -1,0 +1,167 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Simular Crédito Hipotecario</ion-title>
+  </ion-navbar>
+
+</ion-header>
+<ion-content padding>
+  <form #SimulacionForm="ngForm" (ngSubmit)="btnSimular()" role="form">
+
+    <ion-grid *ngIf="simulacion">
+      <ion-row>
+        <ion-col col-12>
+
+          <p>
+            Ingrese sus datos para la simulación del credito hipotecario.
+          </p>
+
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-8>
+          <ion-item>
+            <ion-label floating>RUT</ion-label>
+            <ion-input name="rutCliente" #rutCliente="ngModel" type="number" [(ngModel)]="simulacion.rutCliente" required></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col col-4>
+          <ion-item>
+            <ion-label floating>Digito</ion-label>
+            <ion-input type="number" name="dvCliente" #dvCliente="ngModel" [(ngModel)]="simulacion.dvCliente" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label floating>Nombre</ion-label>
+            <ion-input type="text" name="nombreCliente" #nombreCliente="ngModel" [(ngModel)]="simulacion.nombreCliente" required></ion-input>
+          </ion-item>
+
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label floating>Apellido</ion-label>
+            <ion-input type="text" name="apellidoCliente" #apellidoCliente="ngModel" [(ngModel)]="simulacion.apellidoCliente" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12>
+          <ion-item>
+            <ion-label floating>Correo Electronico</ion-label>
+            <ion-input type="email" name="emailCliente" #emailCliente="ngModel" [(ngModel)]="simulacion.emailCliente" required></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-8>
+          <ion-item no-lines>
+            <ion-label>Valor Propiedad UF</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col col-4>
+          <ion-item no-lines>
+            <ion-badge item-end>{{simulacion.valorPropiedadUf}}</ion-badge>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12>
+          <ion-item>
+            <ion-range (ionChange)="calculoProcentaje($event)" min="600" max="3500" pin="true" step="100" snaps="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="simulacion.valorPropiedadUf"
+              color="secondary">
+              <ion-label range-left>600 UF</ion-label>
+              <ion-label range-right>3500 UF</ion-label>
+            </ion-range>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-8>
+          <ion-item no-lines>
+            <ion-label>Monto Credito UF</ion-label>
+            <ion-badge [color]="dynamicColor" item-end>{{porcentaje | number:'.1-2'}}%</ion-badge>
+
+          </ion-item>
+        </ion-col>
+        <ion-col col-4>
+          <ion-item no-lines>
+            <ion-badge item-end>{{simulacion.montoCreditoUf}}</ion-badge>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12>
+          <ion-item>
+            <ion-range (ionChange)="calculoProcentaje($event)" min="600" max="3500" pin="true" step="100" snaps="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="simulacion.montoCreditoUf"
+              color="secondary">
+              <ion-label range-left>600 UF</ion-label>
+              <ion-label range-right>3500 UF</ion-label>
+            </ion-range>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-8>
+          <ion-item no-lines>
+            <ion-label>Plazo</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col col-4>
+          <ion-item no-lines>
+            <ion-badge item-end>{{simulacion.plazo}}</ion-badge>
+          </ion-item>
+        </ion-col>
+        <ion-col col-12>
+          <ion-item>
+            <ion-range min="5" max="30" pin="true" step="1" snaps="true" [ngModelOptions]="{standalone: true}" [(ngModel)]="simulacion.plazo" color="secondary">
+              <ion-label range-left>5 Años</ion-label>
+              <ion-label range-right>30 Años</ion-label>
+            </ion-range>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-8>
+          <ion-item no-lines>
+            <ion-label>Propiedad DFL-2</ion-label>
+          </ion-item>
+        </ion-col>
+        <ion-col col-4>
+          <ion-item no-lines>
+            <ion-toggle [ngModelOptions]="{standalone: true}" [(ngModel)]="simulacion.indDfl2"></ion-toggle>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col col-12>
+          <ion-list>
+            <ion-item>
+              <ion-label>Region</ion-label>
+              <ion-select [ngModelOptions]="{standalone: true}" [(ngModel)]="codregion">
+                <ion-option *ngFor="let region of regiones" [value]="region.CodRegion">
+                  {{region.NombreRegion}}
+                </ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+          <ion-list>
+            <ion-item>
+              <ion-label>Comuna</ion-label>
+                <ion-select [disabled]="!codregion" [ngModelOptions]="{standalone: true}" [(ngModel)]="comuna">
+
+                  <ion-option *ngFor="let comuna of regiones | comuna: codregion ">
+                    {{comuna}}
+                  </ion-option>
+              </ion-select>
+            </ion-item>
+          </ion-list>
+        </ion-col>
+      </ion-row>
+
+      <button ion-button full [disabled]="!SimulacionForm.form.valid" type="submit">Simular Credito</button>
+
+
+    </ion-grid>
+  </form>
+</ion-content>

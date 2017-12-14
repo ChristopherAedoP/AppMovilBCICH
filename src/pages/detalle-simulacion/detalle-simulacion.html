@@ -1,0 +1,68 @@
+<!--
+  Generated template for the DetalleSimulacionPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Resultado Simulación</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card *ngFor="let item of lista ; let i = index">
+
+    <ion-card-header>
+      <ion-item>
+      <h2 class="titulosimulacion" >{{item.nombre}}</h2>
+
+
+
+      </ion-item>
+
+    </ion-card-header>
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          <ion-label>Tasa Anual</ion-label>
+          <ion-badge item-end>{{item.simulacion.tasa | number:'.1-2'}} %</ion-badge>
+        </ion-item>
+        <ion-item>
+          <ion-label>Dividendo Neto</ion-label>
+          <ion-badge item-end>{{item.simulacion.dividendo | number:'.1-2'}} UF</ion-badge>
+        </ion-item>
+        <ion-item>
+          <ion-label>S.Desgravamen</ion-label>
+          <ion-badge item-end>{{item.simulacion.montoSegDesg | number:'.1-2'}} UF</ion-badge>
+        </ion-item>
+        <ion-item>
+          <ion-label>S.Incendio-Sismo</ion-label>
+          <ion-badge item-end>{{item.simulacion.montoSegIncSis | number:'.1-2'}} UF</ion-badge>
+        </ion-item>
+        <ion-item>
+          <ion-label>CAE</ion-label>
+          <ion-badge outline item-end>{{item.simulacion.datosCae.tasaCae | number:'.1-2'}} %</ion-badge>
+        </ion-item>
+        <ion-item>
+          <ion-label>Diviendo Mensual Total</ion-label>
+          <ion-badge color="secondary" item-end>{{item.simulacion.dividendoTotal | number:'.1-2'}} UF</ion-badge>
+        </ion-item>
+        <ion-item>
+          <ion-badge color="secondary" item-end>{{item.simulacion.dividendoTotalPesos | currency:'$ ':true:'.0-0'}} </ion-badge>
+        </ion-item>
+      </ion-list>
+
+
+        <button ion-button full color="secondary" icon-left (click)="btnPreAprovacion()">
+            <ion-icon ios="ios-flash" md="md-flash"></ion-icon>
+             Pre Aprobación
+        </button>
+    </ion-card-content>
+
+  </ion-card>
+
+</ion-content>

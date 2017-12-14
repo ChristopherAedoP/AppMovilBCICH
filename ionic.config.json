@@ -1,0 +1,8 @@
+{
+  "name": "AppMovilIonicBCI",
+  "app_id": "787edaca",
+  "type": "ionic-angular",
+  "integrations": {
+    "cordova": {}
+  }
+}

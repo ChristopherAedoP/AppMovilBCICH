@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Creditos Hipotecarios</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card  *ngFor="let item of creditosHipotecarios ; let i = index" >
+
+    <ion-card-header>
+      <h1>{{item.nombre}}</h1>
+
+    </ion-card-header>
+    <ion-card-content>
+       {{item.descripcion}}
+    </ion-card-content>
+    <ion-buttons end>
+      <button ion-button icon-only outline (click)="detalleCredito(item)" >
+            <ion-icon name="search"></ion-icon>
+          </button>
+    </ion-buttons>
+  </ion-card>
+
+</ion-content>
